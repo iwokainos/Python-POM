@@ -1,18 +1,12 @@
-import time
-import unittest
-from selenium import webdriver
 from Pages.LandingPage import LandingPage
 from Pages.ResultsPage import ResultsPage
 from Pages.ProductPage import ProductPage
-from selenium.webdriver.chrome.options import Options
+from Pages.BasePage import BasePage
 
-class BasketTest(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.chrome_options = Options()
-        cls.chrome_options.add_argument("--window-position=2000,0")
-        cls.driver = webdriver.Chrome(executable_path="C:/Selenium/chromedriver.exe", chrome_options=cls.chrome_options)
-        cls.driver.maximize_window()
+class BasketTest(BasePage):
+    def setUp(self):
+        super().setUp()
+        print("RUNNING BEFORE EACH TEST")
 
     def test_basket_validation(self):
         driver = self.driver
@@ -28,8 +22,6 @@ class BasketTest(unittest.TestCase):
         basket.basket_item_validation()
         assert True
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.close()
-        cls.driver.quit()
-        print("Test completed")
+    def tearDown(self):
+        super().setUp()
+        print("RUNNING AFTER EACH TEST")

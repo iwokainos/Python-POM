@@ -1,17 +1,10 @@
-import unittest
-import time
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from Pages.LandingPage import LandingPage
-from Pages.HomePage import HomePage
+from Pages.BasePage import BasePage
 
-class SearchTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.chrome_options = Options()
-        cls.chrome_options.add_argument("--window-position=2000,0")
-        cls.driver = webdriver.Chrome(executable_path="C:/Selenium/chromedriver.exe", chrome_options=cls.chrome_options)
-        cls.driver.maximize_window()
+class SearchTests(BasePage):
+    def setUp(self):
+        super().setUp()
+        print("RUNNING BEFORE EACH TEST")
 
 
     def test_search_valid(self):
@@ -23,8 +16,6 @@ class SearchTests(unittest.TestCase):
         search.search_type_in()
         assert 'czapka' in driver.title
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.close()
-        cls.driver.quit()
-        print("Test completed")
+    def tearDown(self):
+        super().setUp()
+        print("RUNNING AFTER EACH TEST")
