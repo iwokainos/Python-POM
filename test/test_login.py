@@ -1,19 +1,12 @@
-from selenium import webdriver
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.chrome.options import Options
-import unittest
 from Pages.LandingPage import LandingPage
 from Pages.HomePage import HomePage
+from Pages.BasePage import BasePage
 
 # noinspection PyDeprecation
-class LoginTest(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.chrome_options = Options()
-        cls.chrome_options.add_argument("--window-position=2000,0")
-        cls.driver = webdriver.Chrome(executable_path="C:/Selenium/chromedriver.exe", chrome_options=cls.chrome_options)
-        cls.driver.maximize_window()
+class LoginTest(BasePage):
+    def setUp(self):
+        super().setUp()
+        print("RUNNING BEFORE EACH TEST")
 
     def test_login_valid(self):
         driver = self.driver
@@ -43,10 +36,8 @@ class LoginTest(unittest.TestCase):
         logout = LandingPage(driver)
         assert LOGIN_CAPTION == logout.logout_header()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.close()
-        cls.driver.quit()
-        print("Test completed")
+    def tearDown(self):
+        super().setUp()
+        print("RUNNING AFTER EACH TEST")
 
 # python -m unittest login.py
