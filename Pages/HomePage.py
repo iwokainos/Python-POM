@@ -1,24 +1,25 @@
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 class HomePage():
 
     def __init__(self, driver):
         self.driver = driver
-        # self.logout_menu_id = "login_any"
-        # self.logout_sub_menu_class_name = "KI27k logout"
-
-    # def verify_logged(self):
-    #     return self.driver.find_element_by_xpath(".//span[@class = 'Moje konto']").get
+        self.driver.account_button_id = "login"
+        self.driver.logout_subitem_xpath = "//*[@id='login']/div/div[2]/div[4]"
+        self.driver.login_header_xpath = "/html/body/header/micro-frontend/div/div[2]/div[2]/div[2]/span[2]"
 
     def hit_logout_menu(self):
         a = ActionChains(self.driver)
-        m = self.driver.find_element_by_id("login")
-        a.move_to_element(m).perform()
-        n = self.driver.find_element_by_xpath("//*[@id='login']/div/div[2]/div[4]")
-        a.move_to_element(n).click().perform()
+        my_account_button = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, self.driver.account_button_id)))
+        a.move_to_element(my_account_button).perform()
+        logout_subitem = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, self.driver.logout_subitem_xpath)))
+        a.move_to_element(logout_subitem).click().perform()
 
     def login_header(self):
-        span_element = self.driver.find_element_by_xpath("/html/body/header/micro-frontend/div/div[2]/div[2]/div[2]/span[2]")
-        new = span_element.text
+        login_header = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, self.driver.login_header_xpath)))
+        new = login_header.text
         return new

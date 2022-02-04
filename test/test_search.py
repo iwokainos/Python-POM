@@ -11,7 +11,6 @@ class SearchTests(unittest.TestCase):
         cls.chrome_options = Options()
         cls.chrome_options.add_argument("--window-position=2000,0")
         cls.driver = webdriver.Chrome(executable_path="C:/Selenium/chromedriver.exe", chrome_options=cls.chrome_options)
-        cls.driver.implicitly_wait(10)
         cls.driver.maximize_window()
 
 
@@ -20,13 +19,12 @@ class SearchTests(unittest.TestCase):
         driver.get("https://shop.mango.com/pl")
         search = LandingPage(driver)
         search.accept_cookies()
-        time.sleep(5)
         search.click_search_button()
         search.search_type_in()
-        assert 'sukienka' in driver.title
+        assert 'czapka' in driver.title
 
     @classmethod
     def tearDownClass(cls):
-        # cls.driver.close()
-        # cls.driver.quit()
+        cls.driver.close()
+        cls.driver.quit()
         print("Test completed")
